@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/layout.css" />
+    @if (IsSectionDefined("scriptContent"))
+    {
+        @RenderSection("scriptContent")
+    }
+</head>
+<body>
+    <nav class="navbar">
+        <a href="~/Index">Home</a>
+        <a href="~/AddCustomer">Add Customer</a>
+        <a href="~/DeleteCustomer">Delete Customer</a>
+        <a href="~/UpdateCustomer">Update Customer</a>
+        <a href="~/AddItem">Add Item</a>
+        <a href="~/DeleteItem">Delete Item</a>
+        <a href="~/UpdateItem">Update Item</a>
+        <a href="~/ProcessSale">Process Sale</a>
+    </nav>
+    <header>
+        @if (IsSectionDefined("headerContent"))
+        {
+            @RenderSection("headerContent")
+        }
+    </header>
+    <main>
+        @if (IsSectionDefined("mainContent"))
+        {
+            @RenderSection("mainContent")
+        }
+    </main>
+    <footer>
+        @if (IsSectionDefined("footerContent"))
+        {
+            @RenderSection("footerContent")
+        }
+    </footer>
+</body>
+</html>
