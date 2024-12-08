@@ -5,26 +5,15 @@ using System.Linq.Expressions;
 
 namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 {
-    public class Customers
+    public class Customers : SqlConnectionObject
     {
-        static string? _ABCSystemDB;
-
-        public Customers()
-        {
-            ConfigurationBuilder DatabaseUsersBuilder = new();
-            DatabaseUsersBuilder.SetBasePath(Directory.GetCurrentDirectory());
-            DatabaseUsersBuilder.AddJsonFile("appsettings.json");
-            IConfiguration DatabaseUsersConfiguration = DatabaseUsersBuilder.Build();
-            _ABCSystemDB = DatabaseUsersConfiguration.GetConnectionString("NoSecurity");
-        }
-
         public bool AddCustomer(Customer customer)
         {
             bool success = false;
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand AddCustomerCommand = new()
                     {
@@ -100,7 +89,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand DeleteCustomerCommand = new()
                     {
@@ -136,7 +125,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand GetCustomerCommand = new()
                     {
@@ -183,7 +172,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand GetCustomersCommand = new()
                     {
@@ -224,7 +213,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand UpdateCustomerCommand = new()
                     {

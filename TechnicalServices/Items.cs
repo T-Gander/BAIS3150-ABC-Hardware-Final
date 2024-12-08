@@ -4,26 +4,15 @@ using System.Data;
 
 namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 {
-    public class Items
+    public class Items : SqlConnectionObject
     {
-        static string? _ABCSystemDB;
-
-        public Items()
-        {
-            ConfigurationBuilder DatabaseUsersBuilder = new();
-            DatabaseUsersBuilder.SetBasePath(Directory.GetCurrentDirectory());
-            DatabaseUsersBuilder.AddJsonFile("appsettings.json");
-            IConfiguration DatabaseUsersConfiguration = DatabaseUsersBuilder.Build();
-            _ABCSystemDB = DatabaseUsersConfiguration.GetConnectionString("NoSecurity");
-        }
-
         public bool AddItem(Item item)
         {
             bool success = false;
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand AddItemCommand = new()
                     {
@@ -83,7 +72,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand DeleteItemCommand = new()
                     {
@@ -119,7 +108,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand UpdateItemCommand = new()
                     {
@@ -179,7 +168,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand GetItemCommand = new()
                     {
@@ -225,7 +214,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 
             try
             {
-                using (SqlConnection Connection = new(_ABCSystemDB))
+                using (SqlConnection Connection = new(ABCSystemDB))
                 {
                     SqlCommand GetItemsCommand = new()
                     {
