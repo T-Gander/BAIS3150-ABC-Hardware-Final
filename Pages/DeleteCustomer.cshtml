@@ -1,4 +1,49 @@
 ﻿@page
 @model BAIS3150_ABC_Hardware_Final.Pages.DeleteCustomerModel
+@using BAIS3150_ABC_Hardware_Final.Domain
+@using System.Text.Json;
 @{
+}
+
+@section mainContent {
+    <h1>Delete Customer Form</h1>
+    <form method="post" onsubmit="false" id="deleteCustomerForm">
+        <table>
+            <tr>
+                <td>Customer:</td>
+                <td>
+                    <input asp-for="CustomerID" type="text" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
+                    <datalist id="customers">
+                        @foreach (Customer customer in Model.Customers)
+                        {
+                            <option value="@customer.CustomerID" data-customer="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(customer))">@customer.FirstName @customer.LastName</option>
+                        }
+                    </datalist>
+                </td>
+                <td>
+                    <button type="button" id="LoadCustomerDetails">Load Details</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="customerDetails">
+
+    </table>
+
+    @Model.ConfirmationMessage
+
+}
+
+@section scriptContent {
+    <script src="~/js/DeleteCustomer.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let customers = @Html.Raw(JsonSerializer.Serialize(Model.Customers));
+
+            document.getElementById('LoadCustomerDetails').addEventListener('click', function () {
+                loadCustomerDetails(document.getElementById('CustomerID').value);
+            });
+        });
+    </script>
 }

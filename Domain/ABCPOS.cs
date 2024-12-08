@@ -15,6 +15,18 @@ namespace BAIS3150_ABC_Hardware_Final.Domain
             Items ItemManager = new();
             return ItemManager.AddItem(item);
         }
+
+        public List<Customer> GetCustomers()
+        {
+            Customers CustomerManager = new();
+            return CustomerManager.GetCustomers();
+        }
+
+        public bool RemoveCustomer(int customerID)
+        {
+            Customers CustomerManager = new();
+            return CustomerManager.DeleteCustomer(customerID);
+        }
     }
 
     
