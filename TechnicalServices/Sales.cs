@@ -14,6 +14,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand AddSaleCommand = new()
                     {
                         Connection = Connection,

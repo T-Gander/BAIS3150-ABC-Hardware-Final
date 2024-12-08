@@ -2,3 +2,48 @@
 @model BAIS3150_ABC_Hardware_Final.Pages.AddCustomerModel
 @{
 }
+
+@section mainContent {
+    <h1>Add Customer Form</h1>
+    <form method="post" onsubmit="false">
+        <table>
+            <tr>
+                <td>First Name:</td>
+                <td>
+                    <input type="text" asp-for="FirstName" value="@Model.FirstName" />
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td>
+                    <input type="text" asp-for="LastName" value="@Model.LastName" />
+                </td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td>
+                    <input type="text" asp-for="Address" value="@Model.Address" />
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                    <input type="text" asp-for="City" value="@Model.City" />
+                </td>
+            </tr>
+            <tr>
+                <td>Province:</td>
+                <td>
+                    <input type="text" asp-for="Province" value="@Model.Province" />
+                </td>
+            </tr>
+            <tr>
+                <td>PostalCode:</td>
+                <td>
+                    <input type="text" asp-for="PostalCode" value="@Model.PostalCode" />
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+}

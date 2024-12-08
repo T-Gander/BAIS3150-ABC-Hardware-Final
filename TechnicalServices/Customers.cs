@@ -15,6 +15,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand AddCustomerCommand = new()
                     {
                         Connection = Connection,
@@ -91,6 +93,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand DeleteCustomerCommand = new()
                     {
                         Connection = Connection,
@@ -127,6 +131,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand GetCustomerCommand = new()
                     {
                         Connection = Connection,
@@ -174,6 +180,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand GetCustomersCommand = new()
                     {
                         Connection = Connection,
@@ -215,6 +223,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand UpdateCustomerCommand = new()
                     {
                         Connection = Connection,

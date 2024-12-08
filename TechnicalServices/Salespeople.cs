@@ -14,6 +14,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand GetSalespersonCommand = new()
                     {
                         Connection = Connection,
@@ -57,6 +59,8 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             {
                 using (SqlConnection Connection = new(ABCSystemDB))
                 {
+                    Connection.Open();
+
                     SqlCommand GetSalespeopleCommand = new()
                     {
                         Connection = Connection,
