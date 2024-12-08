@@ -2,3 +2,37 @@
 @model BAIS3150_ABC_Hardware_Final.Pages.AddItemModel
 @{
 }
+
+@section mainContent {
+    <h1>Add Item Form</h1>
+    <form method="post" onsubmit="false">
+        <table>
+            <tr>
+                <td>Item Number:</td>
+                <td>
+                    <input type="text" asp-for="ItemNumber" value="@Model.ItemNumber" />
+                </td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td>
+                    <input type="text" asp-for="Description" value="@Model.Description" />
+                </td>
+            </tr>
+            <tr>
+                <td>Unit Price:</td>
+                <td>
+                    <input type="text" asp-for="UnitPrice" value="@Model.UnitPrice" />
+                </td>
+            </tr>
+            <tr>
+                <td>Quantity on Hand:</td>
+                <td>
+                    <input type="text" asp-for="QuantityOnHand" value="@Model.QuantityOnHand" />
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+    @Model.ConfirmationMessage
+}

@@ -9,6 +9,12 @@ namespace BAIS3150_ABC_Hardware_Final.Domain
             Customers CustomerManager = new();
             return CustomerManager.AddCustomer(customer);
         }
+
+        public bool CreateItem(Item item)
+        {
+            Items ItemManager = new();
+            return ItemManager.AddItem(item);
+        }
     }
 
     
