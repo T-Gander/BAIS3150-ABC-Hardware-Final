@@ -10,7 +10,7 @@
     <form method="post" onsubmit="false" id="deleteCustomerForm">
         <table>
             <tr>
-                <td>Customer:</td>
+                <td>Customer ID:</td>
                 <td>
                     <input asp-for="CustomerID" type="text" autocomplete="off" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
                     <datalist id="customers">
@@ -35,7 +35,7 @@
 }
 
 @section scriptContent {
-    <script src="~/js/DeleteCustomer.js"></script>
+    <script src="~/js/Customer.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

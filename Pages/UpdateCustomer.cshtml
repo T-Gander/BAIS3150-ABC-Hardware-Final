@@ -1,4 +1,57 @@
 ﻿@page
 @model BAIS3150_ABC_Hardware_Final.Pages.UpdateCustomerModel
+@using BAIS3150_ABC_Hardware_Final.Domain
+@using System.Text.Json;
 @{
+}
+
+@section mainContent {
+    <h1>Update Customer Form</h1>
+    <form method="post" onsubmit="false">
+        <table>
+            <tr>
+                <td>Customer ID:</td>
+                <td>
+                    <input asp-for="CustomerID" type="text" autocomplete="off" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
+                    <datalist id="customers">
+                        @foreach (Customer customer in Model.Customers)
+                        {
+                            <option value="@customer.CustomerID" data-customer="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(customer))">@customer.FirstName @customer.LastName</option>
+                        }
+                    </datalist>
+                </td>
+                <td>
+                    <button type="button" id="LoadCustomerDetails">Load Details</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="customerDetails">
+        
+    </table>
+    <form id="updateCustomerForm" method="post" style="display: none;">
+        <input type="hidden" asp-for="CustomerID" id="hiddenCustomerID" value="@Model.CustomerID"/>
+        <input type="hidden" asp-for="FirstName" id="hiddenFirstName" value="@Model.FirstName" />
+        <input type="hidden" asp-for="LastName" id="hiddenLastName" value="@Model.LastName" />
+        <input type="hidden" asp-for="Address" id="hiddenAddress" value="@Model.Address" />
+        <input type="hidden" asp-for="City" id="hiddenCity" value="@Model.City" />
+        <input type="hidden" asp-for="Province" id="hiddenProvince" value="@Model.Province" />
+        <input type="hidden" asp-for="PostalCode" id="hiddenPostalCode" value="@Model.PostalCode" />
+    </form>
+    @Model.ConfirmationMessage
+
+}
+
+@section scriptContent {
+    <script src="~/js/Customer.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let customers = @Html.Raw(JsonSerializer.Serialize(Model.Customers));
+
+            document.getElementById('LoadCustomerDetails').addEventListener('click', function () {
+                loadCustomerDetailsForm(document.getElementById('CustomerID').value);
+            });
+        });
+    </script>
 }
