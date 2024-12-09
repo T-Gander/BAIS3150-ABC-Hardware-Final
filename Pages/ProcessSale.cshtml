@@ -7,10 +7,11 @@
 
 @section mainContent {
     <h1>Process Sale Form</h1>
-    <form method="post" onsubmit="" id="processSaleForm">
+    <form method="post" onsubmit="" id="processSaleForm" >
         <table>
             <tr>
-                <table id="saleTable">
+                <h2>Salesperson Select:</h2>
+                <table id="saleTable" style="margin: 10px 0px;">
                     <tr>
                         <td>Salesperson ID:</td>
                         <td>
@@ -18,11 +19,17 @@
                             <datalist id="salespeople">
                                 @foreach (Salesperson salesperson in Model.Salespeople)
                                 {
-                                    <option value="@salesperson.SalespersonID" data-customer="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(salesperson))">@salesperson.FirstName @salesperson.LastName</option>
+                                    <option value="@salesperson.SalespersonID" data-salesperson="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(salesperson))">@salesperson.FirstName @salesperson.LastName</option>
                                 }
                             </datalist>
                         </td>
                     </tr>
+                </table>
+                <table id="salespersonDetails" style="margin: 10px 0px;">
+                </table>
+                <button type="button" id="LoadSalespersonDetails" >Load Salesperson Details</button>
+                <h2>Customer Select:</h2>
+                <table style="margin: 10px 0px;">
                     <tr>
                         <td>Customer ID:</td>
                         <td>
@@ -34,15 +41,15 @@
                                 }
                             </datalist>
                         </td>
-                        <td>
-                            <button type="button" id="LoadCustomerDetails">Load Details</button>
-                        </td>
                     </tr>
+                </table>
+                <button type="button" id="LoadCustomerDetails" style="margin-top: 20px;">Load Customer Details</button>
+                <table id="customerDetails">
                 </table>
             </tr>
             <tr>
                 <h2>Add an Item to Sale:</h2>
-                <table>
+                <table style="margin: 10px 0px;">
                     <tr>
                         <td>Item Number:</td>
                         <td>
@@ -61,22 +68,70 @@
                             <input asp-for="Quantity" type="text" autocomplete="off" name="Quantity" id="Quantity" />
                         </td>
                     </tr>
+                </table>
+                <button type="button" id="AddItemToSale">Add</button>
+                <h3>Sale Items</h3>
+                <table id="saleItemsTable" style="margin: 10px 0px;">
                     <tr>
+                        <th>Item Number</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Item Total</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </tr>
+            <tr>
+                <table style="margin: 10px 0px;">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
-                            <button type="button" id="AddItemToSale" >Add</button>
+                            Subtotal:
+                        </td>
+                        <td id="subtotal">
+                            $0.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            GST:
+                        </td>
+                        <td id="gst">
+                            $0.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            Sale Total:
+                        </td>
+                        <td id="saleTotal">
+                            $0.00
                         </td>
                     </tr>
                 </table>
-                <h3>Sale Items</h3>
-                <table id="saleItemsTable">
-
-                </table>
             </tr>
         </table>
-        <td>
-            <input type="submit" id="Submit" />
-            <input asp-for="SaleItems" type="hidden" name="SaleItems" id="SaleItems" />
-        </td>
+        <button type="submit" id="Submit" style="margin: 10px 0;">Submit</button>
+        <button type="button" id="Reset" style="margin: 10px 0;">Reset Form</button>
+        <input asp-for="SaleItems" type="hidden" name="SaleItems" id="SaleItems" />
+        <input asp-for="SaleTotal" type="hidden" name="SaleTotal" id="SaleTotal" />
+        <input asp-for="SubTotal" type="hidden" name="SubTotal" id="SubTotal" />
+        <input asp-for="GST" type="hidden" name="GST" id="GST" />
     </form>
     @Model.ConfirmationMessage
 }
@@ -97,6 +152,18 @@
                 submit();
             });
 
+            document.getElementById('Reset').addEventListener('click', function() {
+                sessionStorage.clear();
+                location.reload();
+            });
+
+            document.getElementById('LoadCustomerDetails').addEventListener('click', function() {
+                loadCustomerDetails(document.getElementById('CustomerID').value);
+            });
+
+            document.getElementById('LoadSalespersonDetails').addEventListener('click', function() {
+                loadSalespersonDetails(document.getElementById('SalespersonID').value);
+            });
             
         });
     </script>

@@ -103,3 +103,31 @@ footer p {
 input[type="submit"] {
     margin-top: 20px;
 }
+
+/* CSS rules for this specific table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    empty-cells: hide;
+}
+
+td {
+    width: 20%; /* Adjust based on number of columns */
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:has(td:empty) {
+    background-color: transparent !important;
+}
+
+td:empty {
+    border: none;
+    background: none;
+    background-color: transparent;
+}

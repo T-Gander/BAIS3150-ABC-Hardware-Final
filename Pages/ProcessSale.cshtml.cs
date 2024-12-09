@@ -18,9 +18,6 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
         public string SaleItems { get; set; }
 
         [BindProperty]
-        public string ItemNumber { get; set; }
-
-        [BindProperty]
         public string SalespersonID { get; set; }
 
         [BindProperty]
@@ -62,14 +59,16 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
 
             try
             {
+                decimal GST = decimal.Parse(this.GST);
+                decimal SaleTotal = decimal.Parse(this.SaleTotal);
+                decimal SubTotal = decimal.Parse(this.SubTotal);
+
                 ABCPOS ABCHardware = new ABCPOS();
 
                 List<SaleItem> saleItems = new();
                 string unescapedJson = SaleItems.Replace("\\\"", "\"");
                 saleItems = JsonSerializer.Deserialize<List<SaleItem>>(unescapedJson);
 
-                // Likely unnecessary, I should calculate these as I go and pass to Razor.
-                
                 decimal subtotal = 0;
 
                 foreach (SaleItem saleItem in saleItems) 
@@ -77,36 +76,43 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
                     subtotal += saleItem.ItemTotal;
                 }
 
-                decimal GST = subtotal * 0.05m;
+                decimal gst = subtotal * 0.05m;
                 decimal saleTotal = subtotal + GST;
 
-                //
+                bool clientServerMatch = subtotal == SubTotal && gst == GST && saleTotal == SaleTotal;
 
-                Sale ABCSale = new()
+                if (clientServerMatch) 
                 {
-                    SaleDate = DateTime.Now,
-                    SalespersonID = int.Parse(SalespersonID),
-                    CustomerID = int.Parse(CustomerID),
-                    Subtotal = subtotal,
-                    GST = GST,
-                    SaleTotal = saleTotal
-                };
+                    Sale ABCSale = new()
+                    {
+                        SaleDate = DateTime.Now,
+                        SalespersonID = int.Parse(SalespersonID),
+                        CustomerID = int.Parse(CustomerID),
+                        Subtotal = SubTotal,
+                        GST = GST,
+                        SaleTotal = SaleTotal
+                    };
 
-                int saleNumber = ABCHardware.CreateSale(ABCSale);
+                    int saleNumber = ABCHardware.CreateSale(ABCSale);
 
-                foreach (SaleItem item in saleItems)
-                {
-                    item.SaleNumber = saleNumber;
-                    ABCHardware.CreateSaleItem(item);
+                    foreach (SaleItem item in saleItems)
+                    {
+                        item.SaleNumber = saleNumber;
+                        ABCHardware.CreateSaleItem(item);
 
-                    Item updateItem = ABCHardware.GetItem(item.ItemNumber);
-                    updateItem.QuantityOnHand -= item.Quantity;
+                        Item updateItem = ABCHardware.GetItem(item.ItemNumber);
+                        updateItem.QuantityOnHand -= item.Quantity;
 
-                    ABCHardware.UpdateItem(updateItem);
+                        ABCHardware.UpdateItem(updateItem);
+                    }
+
+                    HttpContext.Session.SetString("ConfirmationMessage", "Sale was processed successfully.");
+                    page = RedirectToPage("/ProcessSale");
                 }
-
-                HttpContext.Session.SetString("ConfirmationMessage", "Sale was processed successfully.");
-                page = RedirectToPage("/ProcessSale");
+                else
+                {
+                    throw new Exception("Client and Server calculations did not match.");
+                }
             }
             catch (Exception ex)
             {
