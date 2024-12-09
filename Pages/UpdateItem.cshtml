@@ -1,4 +1,54 @@
 ﻿@page
 @model BAIS3150_ABC_Hardware_Final.Pages.UpdateItemModel
+@using BAIS3150_ABC_Hardware_Final.Domain
+@using System.Text.Json;
 @{
+}
+
+@section mainContent {
+    <h1>Update Item Form</h1>
+    <form method="post" onsubmit="false">
+        <table>
+            <tr>
+                <td>Item Number:</td>
+                <td>
+                    <input asp-for="ItemNumber" type="text" autocomplete="off" list="items" placeholder="Search..." name="ItemNumber" id="ItemNumber">
+                    <datalist id="items">
+                        @foreach (Item item in Model.Items)
+                        {
+                            <option value="@item.ItemNumber" data-item="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(item))">@item.Description</option>
+                        }
+                    </datalist>
+                </td>
+                <td>
+                    <button type="button" id="LoadItemDetails">Load Details</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="itemDetails">
+    </table>
+
+    <form id="updateItemForm" method="post" style="display: none;">
+        <input type="hidden" asp-for="ItemNumber" id="hiddenItemNumber" value="@Model.ItemNumber" />
+        <input type="hidden" asp-for="Description" id="hiddenDescription" value="@Model.Description" />
+        <input type="hidden" asp-for="UnitPrice" id="hiddenUnitPrice" value="@Model.UnitPrice" />
+        <input type="hidden" asp-for="Deleted" id="hiddenDeleted" value="@Model.Deleted" />
+        <input type="hidden" asp-for="QuantityOnHand" id="hiddenQuantityOnHand" value="@Model.QuantityOnHand" />
+    </form>
+    @Model.ConfirmationMessage
+}
+
+@section scriptContent {
+    <script src="~/js/Item.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let items = @Html.Raw(JsonSerializer.Serialize(Model.Items));
+
+            document.getElementById('LoadItemDetails').addEventListener('click', function () {
+                loadItemDetailsForm(document.getElementById('ItemNumber').value);
+            });
+        });
+    </script>
 }
