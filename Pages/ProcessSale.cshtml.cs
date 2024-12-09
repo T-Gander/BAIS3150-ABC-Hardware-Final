@@ -18,6 +18,9 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
         public string SaleItems { get; set; }
 
         [BindProperty]
+        public string ItemNumber { get; set; }
+
+        [BindProperty]
         public string SalespersonID { get; set; }
 
         [BindProperty]

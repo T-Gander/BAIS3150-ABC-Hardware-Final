@@ -139,3 +139,52 @@ function updateHiddenCustomerForm() {
     // Submit the form
     document.getElementById('updateCustomerForm').submit();
 }
+
+function isAddCustomerFormValid(form) {
+
+    var isValid = true;
+
+    var firstName = form.FirstName.value;
+    var lastName = form.LastName.value;
+    var address = form.Address.value;
+    var city = form.City.value;
+    var province = form.Province.value;
+    var postalCode = form.PostalCode.value;
+    var postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] [0-9][A-Z][0-9]$/i;
+
+    if (!firstName.length > 0) {
+        document.getElementById('firstNameValid').textContent = "First Name is required.";
+        isValid = false;
+    }
+
+    if (!lastName.length > 0) {
+        document.getElementById('lastNameValid').textContent = "Last Name is required.";
+        isValid = false;
+    }
+
+    if (!address.length > 0) {
+        document.getElementById('addressValid').textContent = "Address is required.";
+        isValid = false;
+    }
+
+    if (!city.length > 0) {
+        document.getElementById('cityValid').textContent = "City is required.";
+        isValid = false;
+    }
+
+    if (!province.length > 0) {
+        document.getElementById('provinceValid').textContent = "Province is required.";
+        isValid = false;
+    }
+
+    if (!postalCode.length > 0 && !postalCodeRegex.test(postalCode)) {
+        document.getElementById('postalCodeValid').textContent = "Postal Code is required in the format A1A 1A1.";
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+function isUpdateCustomerFormValid(form) {
+    var test = 0;
+}

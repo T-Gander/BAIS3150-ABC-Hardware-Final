@@ -5,46 +5,62 @@
 
 @section mainContent {
     <h1>Add Customer Form</h1>
-    <form method="post" onsubmit="false">
+    <form id="AddCustomerForm" method="post" onsubmit="return isAddCustomerFormValid(document.getElementById('AddCustomerForm'));">
         <table>
             <tr>
                 <td>First Name:</td>
                 <td>
                     <input type="text" asp-for="FirstName" value="@Model.FirstName" />
+                    <br />
+                    <span id="firstNameValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>Last Name:</td>
                 <td>
                     <input type="text" asp-for="LastName" value="@Model.LastName" />
+                    <br />
+                    <span id="lastNameValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>Address:</td>
                 <td>
                     <input type="text" asp-for="Address" value="@Model.Address" />
+                    <br />
+                    <span id="addressValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>City:</td>
                 <td>
                     <input type="text" asp-for="City" value="@Model.City" />
+                    <br />
+                    <span id="cityValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>Province:</td>
                 <td>
                     <input type="text" asp-for="Province" value="@Model.Province" />
+                    <br />
+                    <span id="provinceValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>PostalCode:</td>
                 <td>
                     <input type="text" asp-for="PostalCode" value="@Model.PostalCode" />
+                    <br />
+                    <span id="postalCodeValid" style="color: red;"></span>
                 </td>
             </tr>
         </table>
-        <input type="submit" value="Submit" />
+        <button type="submit" style="margin-top: 10px;">Submit</button>
     </form>
     @Model.ConfirmationMessage
+}
+
+@section scriptContent {
+    <script src="~/js/Customer.js"></script>
 }
