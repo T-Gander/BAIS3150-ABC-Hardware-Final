@@ -4,9 +4,9 @@ using System.Data;
 
 namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 {
-    public class SalesOrders : SqlConnectionObject
+    public class SaleItems : SqlConnectionObject
     {
-        public bool AddSaleOrder(SaleOrder saleOrder)
+        public bool AddSaleItem(SaleItem saleOrder)
         {
             bool success = false;
 
@@ -16,10 +16,10 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                 {
                     Connection.Open();
 
-                    SqlCommand AddSaleOrderCommand = new()
+                    SqlCommand AddSaleItemCommand = new()
                     {
                         Connection = Connection,
-                        CommandText = "AddSaleOrder",
+                        CommandText = "AddSaleItem",
                         CommandType = CommandType.StoredProcedure
                     };
 
@@ -29,7 +29,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                         SqlDbType = SqlDbType.Int,
                         SqlValue = saleOrder.SaleNumber
                     };
-                    AddSaleOrderCommand.Parameters.Add(SaleNumberParameter);
+                    AddSaleItemCommand.Parameters.Add(SaleNumberParameter);
 
                     SqlParameter ItemNumberParameter = new()
                     {
@@ -37,7 +37,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                         SqlDbType = SqlDbType.VarChar,
                         SqlValue = saleOrder.ItemNumber
                     };
-                    AddSaleOrderCommand.Parameters.Add(ItemNumberParameter);
+                    AddSaleItemCommand.Parameters.Add(ItemNumberParameter);
 
                     SqlParameter QuantityParameter = new()
                     {
@@ -45,7 +45,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                         SqlDbType = SqlDbType.Int,
                         SqlValue = saleOrder.Quantity
                     };
-                    AddSaleOrderCommand.Parameters.Add(QuantityParameter);
+                    AddSaleItemCommand.Parameters.Add(QuantityParameter);
 
                     SqlParameter ItemTotalParameter = new()
                     {
@@ -53,9 +53,9 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                         SqlDbType = SqlDbType.Money,
                         SqlValue = saleOrder.ItemTotal
                     };
-                    AddSaleOrderCommand.Parameters.Add(ItemTotalParameter);
+                    AddSaleItemCommand.Parameters.Add(ItemTotalParameter);
 
-                    AddSaleOrderCommand.ExecuteNonQuery();
+                    AddSaleItemCommand.ExecuteNonQuery();
                     
                     success = true;
                 }

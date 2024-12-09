@@ -52,6 +52,7 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
                     ItemNumber = ItemNumber,
                     Description = Description,
                     Deleted = bool.Parse(Deleted),
+                    UnitPrice = decimal.Parse(UnitPrice),
                     QuantityOnHand = int.Parse(QuantityOnHand)
                 };
 

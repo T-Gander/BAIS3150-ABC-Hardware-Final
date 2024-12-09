@@ -1,4 +1,103 @@
 ﻿@page
 @model BAIS3150_ABC_Hardware_Final.Pages.ProcessSaleModel
+@using BAIS3150_ABC_Hardware_Final.Domain
+@using System.Text.Json;
 @{
+}
+
+@section mainContent {
+    <h1>Process Sale Form</h1>
+    <form method="post" onsubmit="" id="processSaleForm">
+        <table>
+            <tr>
+                <table id="saleTable">
+                    <tr>
+                        <td>Salesperson ID:</td>
+                        <td>
+                            <input asp-for="SalespersonID" type="text" autocomplete="off" list="salespeople" placeholder="Search..." name="SalespersonID" id="SalespersonID">
+                            <datalist id="salespeople">
+                                @foreach (Salesperson salesperson in Model.Salespeople)
+                                {
+                                    <option value="@salesperson.SalespersonID" data-customer="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(salesperson))">@salesperson.FirstName @salesperson.LastName</option>
+                                }
+                            </datalist>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Customer ID:</td>
+                        <td>
+                            <input asp-for="CustomerID" type="text" autocomplete="off" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
+                            <datalist id="customers">
+                                @foreach (Customer customer in Model.Customers)
+                                {
+                                    <option value="@customer.CustomerID" data-customer="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(customer))">@customer.FirstName @customer.LastName</option>
+                                }
+                            </datalist>
+                        </td>
+                        <td>
+                            <button type="button" id="LoadCustomerDetails">Load Details</button>
+                        </td>
+                    </tr>
+                </table>
+            </tr>
+            <tr>
+                <h2>Add an Item to Sale:</h2>
+                <table>
+                    <tr>
+                        <td>Item Number:</td>
+                        <td>
+                            <input asp-for="ItemNumber" type="text" autocomplete="off" list="items" placeholder="Search..." name="ItemNumber" id="ItemNumber">
+                            <datalist id="items">
+                                @foreach (Item item in Model.Items)
+                                {
+                                    <option value="@item.ItemNumber" data-item="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(item))">@item.Description</option>
+                                }
+                            </datalist>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Quantity:</td>
+                        <td>
+                            <input asp-for="Quantity" type="text" autocomplete="off" name="Quantity" id="Quantity" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" id="AddItemToSale" >Add</button>
+                        </td>
+                    </tr>
+                </table>
+                <h3>Sale Items</h3>
+                <table id="saleItemsTable">
+
+                </table>
+            </tr>
+        </table>
+        <td>
+            <input type="submit" id="Submit" />
+            <input asp-for="SaleItems" type="hidden" name="SaleItems" id="SaleItems" />
+        </td>
+    </form>
+    @Model.ConfirmationMessage
+}
+
+@section scriptContent {
+    <script src="~/js/ProcessSale.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('AddItemToSale').addEventListener('click', function () {
+                var itemNumber = document.getElementById('ItemNumber').value;
+                var quantity = document.getElementById('Quantity').value
+                storeItem(itemNumber, quantity);
+                document.getElementById('ItemNumber').value = "";
+                document.getElementById('Quantity').value = "";
+            });
+
+            document.getElementById('Submit').addEventListener('click', function () {
+                submit();
+            });
+
+            
+        });
+    </script>
 }

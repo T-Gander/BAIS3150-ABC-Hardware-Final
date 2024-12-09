@@ -6,9 +6,9 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
 {
     public class Sales : SqlConnectionObject
     {
-        public bool AddSale(Sale sale)
+        public int AddSale(Sale sale)
         {
-            bool success = false;
+            int saleNumber = 0;
 
             try
             {
@@ -70,18 +70,26 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                         SqlValue = sale.SaleTotal
                     };
                     AddSaleCommand.Parameters.Add(SaleTotalParameter);
+
+                    SqlParameter SaleNumberParameter = new()
+                    {
+                        ParameterName = "@SaleNumber",
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Output
+                    };
+                    AddSaleCommand.Parameters.Add(SaleNumberParameter);
                     
                     AddSaleCommand.ExecuteNonQuery();
 
-                    success = true;
+                    saleNumber = (int)SaleNumberParameter.Value;
                 }
             }
             catch (Exception ex)
             {
-                success = false;
+                saleNumber = 0;
                 Console.WriteLine(ex.ToString());
             }
-            return success;
+            return saleNumber;
         }
     }
 }
