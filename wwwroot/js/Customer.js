@@ -64,6 +64,8 @@ function loadCustomerDetailsForm(customerID) {
 
         var displayHTML = `
         <h1>Loaded Customer<h1>
+        <form id="loadedCustomer" method="post">
+        <table>
         <tr>
             <td>CustomerID:</td>
             <td>
@@ -109,24 +111,42 @@ function loadCustomerDetailsForm(customerID) {
         <tr>
             <input type="submit" value="Confirm Update" id="confirmUpdate"/>
         </tr>
+        </table>
+        </form>
         `;
 
         document.getElementById('customerDetails').innerHTML = displayHTML;
 
         document.getElementById('confirmUpdate').addEventListener('click', function () {
-            updateHiddenCustomerForm(); // Submit the form
+            updateHiddenCustomerForm();
+            if (isUpdateCustomerFormValid(document.getElementById('updateCustomerForm'))) {
+                // Submit the form
+                document.getElementById('updateCustomerForm').submit();
+            }
         });
     }
     else {
+        updateHiddenCustomerFormEmpty();
         var displayHTML = 'No Customer Found.';
         document.getElementById('customerDetails').innerHTML = displayHTML;
     }
 
 }
 
+function updateHiddenCustomerFormEmpty() {
+    // Update hidden form with visible form values
+
+    document.getElementById('hiddenCustomerID').value = "";
+    document.getElementById('hiddenFirstName').value = "";
+    document.getElementById('hiddenLastName').value = "";
+    document.getElementById('hiddenAddress').value = "";
+    document.getElementById('hiddenCity').value = "";
+    document.getElementById('hiddenProvince').value = "";
+    document.getElementById('hiddenPostalCode').value = "";
+}
+
 function updateHiddenCustomerForm() {
     // Update hidden form with visible form values
-    var test = document.getElementById('visibleCustomerID').value;
 
     document.getElementById('hiddenCustomerID').value = document.getElementById('visibleCustomerID').value;
     document.getElementById('hiddenFirstName').value = document.getElementById('visibleFirstName').value;
@@ -136,12 +156,63 @@ function updateHiddenCustomerForm() {
     document.getElementById('hiddenProvince').value = document.getElementById('visibleProvince').value;
     document.getElementById('hiddenPostalCode').value = document.getElementById('visiblePostalCode').value;
 
-    // Submit the form
-    document.getElementById('updateCustomerForm').submit();
+}
+
+function isUpdateCustomerFormValid(form) {
+
+    var isValid = true;
+
+    var customerID = form.CustomerID.value;
+    var firstName = form.FirstName.value;
+    var lastName = form.LastName.value;
+    var address = form.Address.value;
+    var city = form.City.value;
+    var province = form.Province.value;
+    var postalCode = form.PostalCode.value;
+    var postalCodeRegex = /^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] [0-9][A-Z][0-9]$/i;
+
+    var validationMessage = "";
+
+    if (!customerID.length > 0) {
+        validationMessage += "Ensure Customer was loaded: "
+    }
+
+    if (!firstName.length > 0) {
+        validationMessage += "First Name is required. ";
+        isValid = false;
+    }
+
+    if (!lastName.length > 0) {
+        validationMessage += "Last Name is required. ";
+        isValid = false;
+    }
+
+    if (!address.length > 0) {
+        validationMessage += "Address is required. ";
+        isValid = false;
+    }
+
+    if (!city.length > 0) {
+        validationMessage += "City is required. ";
+        isValid = false;
+    }
+
+    if (!province.length > 0) {
+        validationMessage += "Province is required. ";
+        isValid = false;
+    }
+
+    if (!postalCode.length > 0 && !postalCodeRegex.test(postalCode)) {
+        validationMessage += "Postal Code is required in the format A1A 1A1.";
+        isValid = false;
+    }
+
+    document.getElementById('formValidationMessage').textContent = validationMessage;
+
+    return isValid;
 }
 
 function isAddCustomerFormValid(form) {
-
     var isValid = true;
 
     var firstName = form.FirstName.value;
@@ -183,8 +254,4 @@ function isAddCustomerFormValid(form) {
     }
 
     return isValid;
-}
-
-function isUpdateCustomerFormValid(form) {
-    var test = 0;
 }

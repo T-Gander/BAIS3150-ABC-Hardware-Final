@@ -7,12 +7,13 @@
 
 @section mainContent {
     <h1>Update Customer Form</h1>
-    <form method="post" onsubmit="false">
+    <form method="post" onsubmit="return isUpdateCustomerFormValid(document.getByElementId('updateCustomerForm'));">
         <table>
             <tr>
                 <td>Customer ID:</td>
                 <td>
                     <input asp-for="CustomerID" type="text" autocomplete="off" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
+                   
                     <datalist id="customers">
                         @foreach (Customer customer in Model.Customers)
                         {
@@ -20,15 +21,15 @@
                         }
                     </datalist>
                 </td>
-                <td>
-                    <button type="button" id="LoadCustomerDetails">Load Details</button>
-                </td>
             </tr>
         </table>
+        <button type="button" id="LoadCustomerDetails" style="margin-top: 10px;">Load Details</button>
     </form>
     <table id="customerDetails">
         
     </table>
+    <br />
+    <span id="formValidationMessage" style="color: red;"></span>
     <form id="updateCustomerForm" method="post" style="display: none;">
         <input type="hidden" asp-for="CustomerID" id="hiddenCustomerID" value="@Model.CustomerID"/>
         <input type="hidden" asp-for="FirstName" id="hiddenFirstName" value="@Model.FirstName" />
