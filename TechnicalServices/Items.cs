@@ -68,7 +68,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
             return success;
         }
 
-        public bool DeleteItem(int ItemNumber)
+        public bool DeleteItem(string ItemNumber)
         {
             bool success = false;
 

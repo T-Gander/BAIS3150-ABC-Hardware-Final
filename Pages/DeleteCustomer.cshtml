@@ -12,7 +12,7 @@
             <tr>
                 <td>Customer:</td>
                 <td>
-                    <input asp-for="CustomerID" type="text" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
+                    <input asp-for="CustomerID" type="text" autocomplete="off" list="customers" placeholder="Search..." name="CustomerID" id="CustomerID">
                     <datalist id="customers">
                         @foreach (Customer customer in Model.Customers)
                         {

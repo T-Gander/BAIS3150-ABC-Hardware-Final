@@ -1,4 +1,47 @@
 ﻿@page
 @model BAIS3150_ABC_Hardware_Final.Pages.DeleteItemModel
+@using BAIS3150_ABC_Hardware_Final.Domain
+@using System.Text.Json;
 @{
+}
+
+@section mainContent {
+    <h1>Delete Item Form</h1>
+    <form method="post" onsubmit="false" id="deleteItemForm">
+        <table>
+            <tr>
+                <td>Customer:</td>
+                <td>
+                    <input asp-for="ItemNumber" type="text" autocomplete="off" list="items" placeholder="Search..." name="ItemNumber" id="ItemNumber">
+                    <datalist id="items">
+                        @foreach (Item item in Model.Items)
+                        {
+                            <option value="@item.ItemNumber" data-item="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(item))">@item.Description</option>
+                        }
+                    </datalist>
+                </td>
+                <td>
+                    <button type="button" id="LoadItemDetails">Load Details</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table id="itemDetails">
+    </table>
+    @Model.ConfirmationMessage
+
+}
+
+@section scriptContent {
+    <script src="~/js/DeleteItem.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let items = @Html.Raw(JsonSerializer.Serialize(Model.Items));
+
+            document.getElementById('LoadItemDetails').addEventListener('click', function () {
+                loadItemDetails(document.getElementById('ItemNumber').value);
+            });
+        });
+    </script>
 }
