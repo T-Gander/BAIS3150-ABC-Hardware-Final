@@ -7,7 +7,7 @@
 
 @section mainContent {
     <h1>Delete Customer Form</h1>
-    <form method="post" onsubmit="false" id="deleteCustomerForm">
+    <form method="post" onsubmit="return isDeleteCustomerFormValid(document.getElementById('deleteCustomerForm'))" id="deleteCustomerForm">
         <table>
             <tr>
                 <td>Customer ID:</td>
@@ -20,14 +20,13 @@
                         }
                     </datalist>
                 </td>
-                <td>
-                    <button type="button" id="LoadCustomerDetails">Load Details</button>
-                </td>
             </tr>
         </table>
+        <button type="button" id="LoadCustomerDetails" style="margin-top: 10px;">Load Details</button>
     </form>
+    <br />
+    <span id="validationMessage" style="color: red;"></span>
     <table id="customerDetails">
-
     </table>
 
     @Model.ConfirmationMessage

@@ -8,7 +8,11 @@ function loadCustomerDetails(customerID) {
         var customer = JSON.parse(customerJSON);
 
         var displayHTML = `
-        <h1>Loaded Customer<h1>
+        <tr>
+        <td colspan="2">
+            <h1>Loaded Customer<h1>
+        </td>
+        </tr>
         <tr>
             <td>CustomerID:</td>
             <td>${customer.customerID}</td>
@@ -38,14 +42,19 @@ function loadCustomerDetails(customerID) {
             <td>${customer.postalCode}</td>
         </tr>
         <tr>
-            <input type="submit" value="Confirm Delete" id="confirmDelete"/>
+            <td colspan="2">
+                <button type="submit" value="Confirm Delete" id="confirmDelete" style="width: 100%;">Confirm Delete</button>
+            </td>
         </tr>
         `;
 
         document.getElementById('customerDetails').innerHTML = displayHTML;
 
         document.getElementById('confirmDelete').addEventListener('click', function () {
-            document.getElementById('deleteCustomerForm').submit(); // Submit the form
+            if (isDeleteCustomerFormValid(document.getElementById('deleteCustomerForm'))) {
+                // Submit the form
+                document.getElementById('deleteCustomerForm').submit();
+            }
         });
     }
     else {
@@ -63,9 +72,13 @@ function loadCustomerDetailsForm(customerID) {
         var customer = JSON.parse(customerJSON);
 
         var displayHTML = `
-        <h1>Loaded Customer<h1>
+        <tr>
+        <td colspan="2">
+            <h1>Loaded Customer<h1>
+        </td>
+        </tr>
         <form id="loadedCustomer" method="post">
-        <table>
+        <table style="margin-top: 10px;">
         <tr>
             <td>CustomerID:</td>
             <td>
@@ -108,10 +121,12 @@ function loadCustomerDetailsForm(customerID) {
                 <input type="text" value="${customer.postalCode}" id="visiblePostalCode" />
             </td>
         </tr>
-        <tr>
-            <input type="submit" value="Confirm Update" id="confirmUpdate"/>
-        </tr>
         </table>
+        <tr>
+            <td colspan="2">
+                <button type="submit" value="Confirm Update" id="confirmUpdate" style="width: 100%;">Confirm Update</button>
+            </td>
+        </tr>
         </form>
         `;
 
@@ -208,6 +223,19 @@ function isUpdateCustomerFormValid(form) {
     }
 
     document.getElementById('formValidationMessage').textContent = validationMessage;
+
+    return isValid;
+}
+
+function isDeleteCustomerFormValid(form) {
+    var isValid = true;
+
+    var customerID = form.CustomerID.value;
+
+    if (!customerID.length > 0) {
+        document.getElementById('validationMessage').textContent = "CustomerID is required.";
+        isValid = false;
+    }
 
     return isValid;
 }

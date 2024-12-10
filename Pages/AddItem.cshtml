@@ -5,34 +5,46 @@
 
 @section mainContent {
     <h1>Add Item Form</h1>
-    <form method="post" onsubmit="false">
+    <form id="AddItemForm" method="post" onsubmit="return isAddItemFormValid(document.getElementById('AddItemForm'));">
         <table>
             <tr>
                 <td>Item Number:</td>
                 <td>
                     <input type="text" asp-for="ItemNumber" value="@Model.ItemNumber" />
+                    <br />
+                    <span id="itemNumberValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>Description:</td>
                 <td>
                     <input type="text" asp-for="Description" value="@Model.Description" />
+                    <br />
+                    <span id="descriptionValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>Unit Price:</td>
                 <td>
                     <input type="text" asp-for="UnitPrice" value="@Model.UnitPrice" />
+                    <br />
+                    <span id="unitPriceValid" style="color: red;"></span>
                 </td>
             </tr>
             <tr>
                 <td>Quantity on Hand:</td>
                 <td>
                     <input type="text" asp-for="QuantityOnHand" value="@Model.QuantityOnHand" />
+                    <br />
+                    <span id="quantityOnHandValid" style="color: red;"></span>
                 </td>
             </tr>
         </table>
-        <input type="submit" value="Submit" />
+        <button type="submit" style="margin-top: 10px;">Submit</button>
     </form>
     @Model.ConfirmationMessage
+}
+
+@section scriptContent {
+    <script src="~/js/Item.js"></script>
 }

@@ -7,7 +7,7 @@
 
 @section mainContent {
     <h1>Update Item Form</h1>
-    <form method="post" onsubmit="false">
+    <form method="post" onsubmit="return isUpdateItemFromValid(document.getElementById('updateItemForm'));">
         <table>
             <tr>
                 <td>Item Number:</td>
@@ -20,15 +20,14 @@
                         }
                     </datalist>
                 </td>
-                <td>
-                    <button type="button" id="LoadItemDetails">Load Details</button>
-                </td>
             </tr>
         </table>
+        <button type="button" id="LoadItemDetails" style="margin-top: 10px;">Load Details</button>
     </form>
     <table id="itemDetails">
     </table>
-
+    <br />
+    <span id="formValidationMessage" style="color: red;"></span>
     <form id="updateItemForm" method="post" style="display: none;">
         <input type="hidden" asp-for="ItemNumber" id="hiddenItemNumber" value="@Model.ItemNumber" />
         <input type="hidden" asp-for="Description" id="hiddenDescription" value="@Model.Description" />
