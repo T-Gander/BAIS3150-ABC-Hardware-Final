@@ -12,14 +12,14 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="~/Index">Home</a>
-        <a href="~/AddCustomer">Add Customer</a>
-        <a href="~/DeleteCustomer">Delete Customer</a>
-        <a href="~/UpdateCustomer">Update Customer</a>
-        <a href="~/AddItem">Add Item</a>
-        <a href="~/DeleteItem">Delete Item</a>
-        <a href="~/UpdateItem">Update Item</a>
-        <a href="~/ProcessSale">Process Sale</a>
+        <a href="~/Index" onclick="clearSessionStorage();">Home</a>
+        <a href="~/AddCustomer" onclick="clearSessionStorage();">Add Customer</a>
+        <a href="~/DeleteCustomer" onclick="clearSessionStorage();">Delete Customer</a>
+        <a href="~/UpdateCustomer" onclick="clearSessionStorage();">Update Customer</a>
+        <a href="~/AddItem" onclick="clearSessionStorage();">Add Item</a>
+        <a href="~/DeleteItem" onclick="clearSessionStorage();">Delete Item</a>
+        <a href="~/UpdateItem" onclick="clearSessionStorage();">Update Item</a>
+        <a href="~/ProcessSale" onclick="clearSessionStorage();">Process Sale</a>
     </nav>
     <header>
         @if (IsSectionDefined("headerContent"))
@@ -42,3 +42,9 @@
     </footer>
 </body>
 </html>
+
+<script>
+    function clearSessionStorage() {
+        sessionStorage.clear();
+    }
+</script>

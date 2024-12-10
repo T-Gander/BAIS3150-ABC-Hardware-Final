@@ -26,11 +26,11 @@
                         </td>
                     </tr>
                 </table>
-                <br />
                 <span id="salespersonIDValid" style="color: red;"></span>
+                <br />
+                <button type="button" id="LoadSalespersonDetails">Load Salesperson Details</button>
                 <table id="salespersonDetails" style="margin: 10px 0px;">
                 </table>
-                <button type="button" id="LoadSalespersonDetails">Load Salesperson Details</button>
                 <h2>Customer Select:</h2>
                 <table style="margin: 10px 0px;">
                     <tr>
@@ -62,7 +62,9 @@
                             <datalist id="items">
                                 @foreach (Item item in Model.Items)
                                 {
-                                    <option value="@item.ItemNumber" data-item="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(item))">@item.Description</option>
+                                    if (item.Deleted == false){
+                                        <option value="@item.ItemNumber" data-item="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(item))">@item.Description</option>
+                                    }
                                 }
                             </datalist>
                             <br />
