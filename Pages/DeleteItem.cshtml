@@ -6,6 +6,7 @@
 }
 
 @section mainContent {
+    @Model.ConfirmationMessage
     <h1>Delete Item Form</h1>
     <form method="post" onsubmit="return isDeleteItemFormValid(document.getElementById('deleteItemForm'));" id="deleteItemForm">
         <table>
@@ -28,7 +29,7 @@
     <span id="validationMessage" style="color: red;"></span>
     <table id="itemDetails">
     </table>
-    @Model.ConfirmationMessage
+    <button type="button" id="Reset" style="margin: 10px 0;">Reset Form</button>
 
 }
 
@@ -41,6 +42,11 @@
 
             document.getElementById('LoadItemDetails').addEventListener('click', function () {
                 loadItemDetails(document.getElementById('ItemNumber').value);
+            });
+
+            document.getElementById('Reset').addEventListener('click', function() {
+                sessionStorage.clear();
+                location.reload();
             });
         });
     </script>

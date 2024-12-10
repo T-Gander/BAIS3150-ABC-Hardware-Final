@@ -224,6 +224,10 @@ function isUpdateCustomerFormValid(form) {
 
     document.getElementById('formValidationMessage').textContent = validationMessage;
 
+    if (isValid) {
+        sessionStorage.clear();
+    }
+
     return isValid;
 }
 
@@ -235,6 +239,10 @@ function isDeleteCustomerFormValid(form) {
     if (!customerID.length > 0) {
         document.getElementById('validationMessage').textContent = "CustomerID is required.";
         isValid = false;
+    }
+
+    if (isValid) {
+        sessionStorage.clear();
     }
 
     return isValid;
@@ -279,6 +287,10 @@ function isAddCustomerFormValid(form) {
     if (!postalCode.length > 0 && !postalCodeRegex.test(postalCode)) {
         document.getElementById('postalCodeValid').textContent = "Postal Code is required in the format A1A 1A1.";
         isValid = false;
+    }
+
+    if (isValid) {
+        sessionStorage.clear();
     }
 
     return isValid;

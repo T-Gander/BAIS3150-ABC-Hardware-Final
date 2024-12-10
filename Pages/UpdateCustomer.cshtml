@@ -6,6 +6,7 @@
 }
 
 @section mainContent {
+    @Model.ConfirmationMessage
     <h1>Update Customer Form</h1>
     <form method="post" onsubmit="return isUpdateCustomerFormValid(document.getByElementId('updateCustomerForm'));">
         <table>
@@ -39,7 +40,7 @@
         <input type="hidden" asp-for="Province" id="hiddenProvince" value="@Model.Province" />
         <input type="hidden" asp-for="PostalCode" id="hiddenPostalCode" value="@Model.PostalCode" />
     </form>
-    @Model.ConfirmationMessage
+    <button type="button" id="Reset" style="margin: 10px 0;">Reset Form</button>
 
 }
 
@@ -52,6 +53,11 @@
 
             document.getElementById('LoadCustomerDetails').addEventListener('click', function () {
                 loadCustomerDetailsForm(document.getElementById('CustomerID').value);
+            });
+
+            document.getElementById('Reset').addEventListener('click', function() {
+                sessionStorage.clear();
+                location.reload();
             });
         });
     </script>

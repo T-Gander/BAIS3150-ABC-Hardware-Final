@@ -6,6 +6,7 @@
 }
 
 @section mainContent {
+    @Model.ConfirmationMessage
     <h1>Update Item Form</h1>
     <form method="post" onsubmit="return isUpdateItemFromValid(document.getElementById('updateItemForm'));">
         <table>
@@ -35,7 +36,7 @@
         <input type="hidden" asp-for="Deleted" id="hiddenDeleted" value="@Model.Deleted" />
         <input type="hidden" asp-for="QuantityOnHand" id="hiddenQuantityOnHand" value="@Model.QuantityOnHand" />
     </form>
-    @Model.ConfirmationMessage
+    <button type="button" id="Reset" style="margin: 10px 0;">Reset Form</button>
 }
 
 @section scriptContent {
@@ -47,6 +48,11 @@
 
             document.getElementById('LoadItemDetails').addEventListener('click', function () {
                 loadItemDetailsForm(document.getElementById('ItemNumber').value);
+            });
+
+            document.getElementById('Reset').addEventListener('click', function() {
+                sessionStorage.clear();
+                location.reload();
             });
         });
     </script>

@@ -143,6 +143,10 @@ function submit() {
     document.getElementById('SaleTotal').value = saleTotal;
     document.getElementById('GST').value = gst;
 
+    if (isValid) {
+        sessionStorage.clear();
+    }
+
     return true;
 }
 

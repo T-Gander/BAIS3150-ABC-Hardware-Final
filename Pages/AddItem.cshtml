@@ -4,6 +4,7 @@
 }
 
 @section mainContent {
+    @Model.ConfirmationMessage
     <h1>Add Item Form</h1>
     <form id="AddItemForm" method="post" onsubmit="return isAddItemFormValid(document.getElementById('AddItemForm'));">
         <table>
@@ -41,10 +42,18 @@
             </tr>
         </table>
         <button type="submit" style="margin-top: 10px;">Submit</button>
+        <button type="button" id="Reset" style="margin: 10px 0;">Reset Form</button>
     </form>
-    @Model.ConfirmationMessage
 }
 
 @section scriptContent {
     <script src="~/js/Item.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('Reset').addEventListener('click', function() {
+                sessionStorage.clear();
+                location.reload();
+            });
+        });
+    </script>
 }

@@ -185,6 +185,10 @@ function isUpdateItemFormValid(form) {
 
     document.getElementById('formValidationMessage').textContent = validationMessage;
 
+    if (isValid) {
+        sessionStorage.clear();
+    }
+
     return isValid;
 }
 
@@ -215,9 +219,13 @@ function isAddItemFormValid(form) {
 
     quantityOnHand = +quantityOnHand;
 
-    if (!quantityOnHand && quanityOnHand >= 0) {
+    if (!quantityOnHand && quantityOnHand >= 0) {
         document.getElementById('quantityOnHandValid').textContent = "Quantity on Hand is required. And must be a positive integer.";
         isValid = false;
+    }
+
+    if (isValid) {
+        sessionStorage.clear();
     }
 
     return isValid;
@@ -231,6 +239,10 @@ function isDeleteItemFormValid(form) {
     if (!itemNumber.length > 0) {
         document.getElementById('validationMessage').textContent = "ItemNumber is required.";
         isValid = false;
+    }
+
+    if (isValid) {
+        sessionStorage.clear();
     }
 
     return isValid;
