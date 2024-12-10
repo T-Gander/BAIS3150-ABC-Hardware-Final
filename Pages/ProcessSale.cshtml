@@ -6,8 +6,9 @@
 }
 
 @section mainContent {
+    @Model.ConfirmationMessage
     <h1>Process Sale Form</h1>
-    <form method="post" onsubmit="" id="processSaleForm" >
+    <form method="post" id="processSaleForm" onsubmit="return submitValidation();">
         <table>
             <tr>
                 <h2>Salesperson Select:</h2>
@@ -25,9 +26,11 @@
                         </td>
                     </tr>
                 </table>
+                <br />
+                <span id="salespersonIDValid" style="color: red;"></span>
                 <table id="salespersonDetails" style="margin: 10px 0px;">
                 </table>
-                <button type="button" id="LoadSalespersonDetails" >Load Salesperson Details</button>
+                <button type="button" id="LoadSalespersonDetails">Load Salesperson Details</button>
                 <h2>Customer Select:</h2>
                 <table style="margin: 10px 0px;">
                     <tr>
@@ -44,6 +47,8 @@
                     </tr>
                 </table>
                 <button type="button" id="LoadCustomerDetails" style="margin-top: 20px;">Load Customer Details</button>
+                <br />
+                <span id="customerIDValid" style="color: red;"></span>
                 <table id="customerDetails">
                 </table>
             </tr>
@@ -60,12 +65,16 @@
                                     <option value="@item.ItemNumber" data-item="@System.Web.HttpUtility.HtmlEncode(Json.Serialize(item))">@item.Description</option>
                                 }
                             </datalist>
+                            <br />
+                            <span id="itemNumberValid" style="color: red;"></span>
                         </td>
                     </tr>
                     <tr>
                         <td>Quantity:</td>
                         <td>
                             <input asp-for="Quantity" type="text" autocomplete="off" name="Quantity" id="Quantity" />
+                            <br />
+                            <span id="quantityValid" style="color: red;"></span>
                         </td>
                     </tr>
                 </table>
@@ -87,6 +96,8 @@
                         <td></td>
                     </tr>
                 </table>
+                <br />
+                <span id="itemValid" style="color: red;"></span>
             </tr>
             <tr>
                 <table style="margin: 10px 0px;">
@@ -126,6 +137,8 @@
                 </table>
             </tr>
         </table>
+        <br />
+        <span id="processFormValid" style="color: red;"></span>
         <button type="submit" id="Submit" style="margin: 10px 0;">Submit</button>
         <button type="button" id="Reset" style="margin: 10px 0;">Reset Form</button>
         <input asp-for="SaleItems" type="hidden" name="SaleItems" id="SaleItems" />
@@ -133,7 +146,6 @@
         <input asp-for="SubTotal" type="hidden" name="SubTotal" id="SubTotal" />
         <input asp-for="GST" type="hidden" name="GST" id="GST" />
     </form>
-    @Model.ConfirmationMessage
 }
 
 @section scriptContent {
@@ -148,10 +160,6 @@
                 document.getElementById('Quantity').value = "";
             });
 
-            document.getElementById('Submit').addEventListener('click', function () {
-                submit();
-            });
-
             document.getElementById('Reset').addEventListener('click', function() {
                 sessionStorage.clear();
                 location.reload();
@@ -164,6 +172,7 @@
             document.getElementById('LoadSalespersonDetails').addEventListener('click', function() {
                 loadSalespersonDetails(document.getElementById('SalespersonID').value);
             });
+
             
         });
     </script>

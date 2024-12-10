@@ -96,6 +96,15 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
                         SaleTotal = SaleTotal
                     };
 
+                    foreach (SaleItem item in saleItems)
+                    {
+                        Item checkItem = ABCHardware.GetItem(item.ItemNumber);
+                        if (checkItem.QuantityOnHand - item.Quantity < 0)
+                        {
+                            throw new Exception($"Insufficent inventory detected for {item.ItemNumber}.");
+                        }
+                    }
+
                     int saleNumber = ABCHardware.CreateSale(ABCSale);
 
                     foreach (SaleItem item in saleItems)
@@ -119,8 +128,8 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
             }
             catch (Exception ex)
             {
-                ConfirmationMessage = "Sale was processed unsuccessfully.";
-                page = Page();
+                HttpContext.Session.SetString("ConfirmationMessage", $"Sale was processed unsuccessfully, {ex.Message}");
+                page = RedirectToPage("/ProcessSale"); ;
             }
             return page;
         }

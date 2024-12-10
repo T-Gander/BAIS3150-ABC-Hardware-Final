@@ -189,7 +189,7 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                     {
                         ParameterName = "@ItemNumber",
                         SqlDbType = SqlDbType.VarChar,
-                        SqlValue = item.ItemNumber
+                        SqlValue = ItemNumber
                     };
                     GetItemCommand.Parameters.Add(ItemNumberParameter);
 

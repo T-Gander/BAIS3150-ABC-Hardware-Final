@@ -79,8 +79,8 @@ namespace BAIS3150_ABC_Hardware_Final.Pages
             }
             catch (Exception ex)
             {
-                ConfirmationMessage = ex.Message;
-                page = Page();
+                HttpContext.Session.SetString("ConfirmationMessage", ex.Message);
+                page = RedirectToPage("/UpdateCustomer");
             }
 
             return page;
