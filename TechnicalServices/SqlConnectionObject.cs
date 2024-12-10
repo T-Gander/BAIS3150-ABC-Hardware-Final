@@ -10,7 +10,7 @@
             DatabaseUsersBuilder.SetBasePath(Directory.GetCurrentDirectory());
             DatabaseUsersBuilder.AddJsonFile("appsettings.json");
             IConfiguration DatabaseUsersConfiguration = DatabaseUsersBuilder.Build();
-            ABCSystemDB = DatabaseUsersConfiguration.GetConnectionString("IntegratedSecurity");
+            ABCSystemDB = DatabaseUsersConfiguration.GetConnectionString("NoSecurity");
         }
     }
 }

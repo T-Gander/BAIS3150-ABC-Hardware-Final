@@ -154,6 +154,7 @@ function isUpdateItemFormValid(form) {
 
     var itemNumber = form.ItemNumber.value;
     var description = form.Description.value;
+    var deleted = form.Deleted.value;
     var unitPrice = form.UnitPrice.value;
     var quantityOnHand = form.QuantityOnHand.value;
 
@@ -166,6 +167,11 @@ function isUpdateItemFormValid(form) {
 
     if (!description.length > 0) {
         validationMessage += "Description is required. ";
+        isValid = false;
+    }
+
+    if (!(deleted == "true" || deleted == "false")) {
+        validationMessage += "Deleted is required and must be true or false. ";
         isValid = false;
     }
 

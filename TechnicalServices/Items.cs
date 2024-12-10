@@ -155,6 +155,14 @@ namespace BAIS3150_ABC_Hardware_Final.TechnicalServices
                     };
                     UpdateItemCommand.Parameters.Add(QuantityOnHandParameter);
 
+                    SqlParameter DeletedParameter = new()
+                    {
+                        ParameterName = "@Deleted",
+                        SqlDbType = SqlDbType.Bit,
+                        SqlValue = item.Deleted
+                    };
+                    UpdateItemCommand.Parameters.Add(DeletedParameter);
+
                     UpdateItemCommand.ExecuteNonQuery();
 
                     success = true;
